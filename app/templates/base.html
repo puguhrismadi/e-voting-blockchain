@@ -1,0 +1,30 @@
+<html>
+  <head>
+     <meta charset="UTF-8">
+    <title>{{ title }}</title>
+  </head>
+  <body>
+   
+    <center><a href="/"><h3>{{ title }}</h3></a>
+    <h5>Blockchain Tecnology simulation with Python</h5>
+    </center>
+    <hr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <center>
+   
+    {% for category, message in messages %}
+        {% if category=='error'%}
+          <li style="color: red">{{ message }} </li>
+        {% else %}
+          <li style="color: blue">{{ message }} </li>
+        {% endif %}
+      
+    {% endfor %}
+    </center>
+   
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </body>
+</html>
