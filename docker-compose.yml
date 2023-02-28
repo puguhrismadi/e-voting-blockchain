@@ -1,0 +1,7 @@
+web:
+build: ./web
+ports:
+ - "1111:1111"
+ - "8000:8000"
+volumes:
+ - .:/code
