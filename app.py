@@ -4,4 +4,4 @@ from app import app
 app.secret_key = 'super-evoting-chain'
 app.config['SESSION_TYPE'] = 'filesystem'
 
-app.run(debug=True, port=1111)
+app.run(host='0.0.0.0',port=3333)

@@ -8,6 +8,6 @@ WORKDIR /code
 
 
 RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
-EXPOSE 1111
-EXPOSE 7000
+EXPOSE 3333
+EXPOSE 4444
 CMD ["flask", "run", "--host", "0.0.0.0"]
