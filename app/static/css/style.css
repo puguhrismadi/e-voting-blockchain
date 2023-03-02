@@ -1,0 +1,314 @@
+body{
+    background: rgb(238, 238, 238);
+    padding-top: 30px;
+}
+
+.main-nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);  
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.main-nav .container{
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-nav .container .menu{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: -15px;
+    margin-top: -15px;
+}
+
+.main-nav .container .menu .item{
+    text-decoration: none;
+    margin-right: 3px;
+    height: 60px !important;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-bottom: 7px solid transparent;
+}
+
+.main-nav .container .menu .item a{
+    text-decoration: none;
+    color: #495158;
+}
+
+.main-nav .container .menu .item.active{
+    border-bottom: 7px solid #D00F0F;
+    background: linear-gradient(180deg, rgba(208, 15, 15, 0) 0%, rgba(201, 23, 23, 0.16) 100%);
+}
+
+.main-nav .container .menu .item.active a{
+    color: #D00F0F;
+    font-weight: bold;
+}
+
+.main-nav .container .menu .item:hover{
+    border-bottom: 7px solid #D00F0F;
+    background: linear-gradient(180deg, rgba(208, 15, 15, 0) 0%, rgba(201, 23, 23, 0.16) 100%);
+}
+
+.main-nav .container .menu .item:hover a{
+    color: #D00F0F;
+}
+
+.title{
+    font-size: 18px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    position: relative;
+    padding-left: 75px;
+    font-weight: bold;
+    border-bottom: 4px solid #D00F0F;
+}
+
+.title .count{
+    height: 30px;
+    width: 30px;
+    background: #d00f0f;
+    border-radius: 100%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: absolute;
+    right: 0;
+}
+
+.title:before{
+    content: '';
+    background-image: url('title.svg');
+    height: 100%;
+    width: 66px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+}
+
+.title-2{
+    color: white;
+    margin-bottom: 11px;
+    height: 33px;
+    background: #df4542;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.title-2 .fa-user-group{
+    margin-right: 8px;
+}
+
+.selection-container{
+    padding: 25px;
+    background: #d00f0f;
+    margin-top: 8px;
+    border-radius: 4px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    top: 8px !important;
+}
+
+.nomination, .information .left, .information .right{
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.select2{
+    width: 100%;
+}
+
+.select2-selection{
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nomination .item{
+    width: fit-content;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    display: flex;
+    cursor: pointer;
+}
+
+.nomination .item.active{
+    background: #FF9F10;
+    border: 1px solid #e68e0a;
+}
+
+.nomination .item:hover{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.nomination .item .number{
+    min-height: 60px;
+    min-width: 60px;
+    max-height: 60px;
+    max-width: 60px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    background: linear-gradient(-145deg, #cc1818 0%, rgba(226, 140, 28, 0.164) 100%);
+    text-shadow: 5px -7px #ffffff2e;
+}
+
+.nomination .item .name{
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 10px;
+    color: #383d41;
+    max-width: 225px;
+    line-height: 1;
+}
+
+.nomination .item.active .name{
+    color: #fff;
+}
+
+.button-vote-container{
+    display: flex;
+    justify-content: end;
+    padding-top: 15px;
+}
+
+.btn-vote{
+    background: yellow;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    height: 40px;
+    padding: 0 20px;
+    font-weight: bold;
+}
+
+.list-voters{
+    max-height: 494px;
+    overflow: auto;
+}
+
+.list-voters .item{
+    border-bottom: 1px solid #dddddd8a;
+    padding: 10px;
+}
+
+.list-voters .item:hover{
+    background: rgb(236, 236, 236);
+}
+
+.list-voted{
+    padding: 15px;
+    position: relative;
+    max-height: 590px;
+    overflow: auto;
+}
+
+.list-voted .item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgb(236, 236, 236);
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.list-voted .item .img-container{
+    background: #ff9f10;
+    height: 70px;
+    width: 70px;
+    border-radius: 100%;
+}
+
+.list-voted .item .text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50px;
+    margin-left: 10px;
+}
+
+.list-voted .item .text .name{
+    font-weight: bold;
+    margin: 0;
+    max-width: 440px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.list-voted .item .text .datetime{
+    font-size: 13px;
+    color: #acaaaa;
+    margin: 0;
+}
+
+.list-voted .item .text .datetime .fa-clock{
+    color: #797c80;
+    margin-right: 2px;
+}
+
+.list-voted .voting-container{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    width: 270px;
+    align-items: center;
+}
+
+.list-voted .voting-container p{
+    margin: 0;
+}
+
+.list-voted .voting{
+    background: #ff9f10;
+    padding: 7px 15px;
+    color: white;
+    border-radius: 4px;
+
+}
+
+.user-img{
+    width: 100%;;
+}
+
+.information .result .body{
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.information .left, .information .right, .nomination{
+    background: white;
+}

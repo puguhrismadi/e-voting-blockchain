@@ -9,7 +9,7 @@ from app import app
 # The node with which our application interacts, there can be multiple
 # such nodes as well. change presiden
 CONNECTED_SERVICE_ADDRESS = "http://202.43.162.26:4444"
-POLITICAL_PARTIES = ["Anies Baswedan","Ridwan Kamil","Ganjar Pranowo","Prabowo"]
+POLITICAL_PARTIES = ["Anies Baswedan","Ridwan Kamil","Ganjar Pranowo","Prabowo Subianto"]
 VOTER_IDS=['Fadri','Alfi','Yudo','Haryo','Rizal','Tanzel','Gerdi','Farid','Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya']
 vote_check=[]
 

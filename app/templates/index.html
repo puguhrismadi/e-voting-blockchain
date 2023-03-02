@@ -1,154 +1,283 @@
-<!-- extend base layout -->
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block content %}
-	<br>
-	<div style="width:100%">
-	<div style="float: left; width: 70%; height: 200px;">
-	<!-- <center> -->
-		
-			<form action="/submit" id="textform" method="post">
-				<table style="width:70%; float: right;">
-				 <tr>
-				  	<td>
-				  		<label>Pilihlah Presiden Kamu</label>
-				  	</td>
-				    <td><select name="party" required>
-							<option value="">select</option>
-							{% for political_partie in political_parties %}
-							<option value="{{political_partie}}">{{political_partie}}</option>
-							{% endfor %}
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label>Masukkan Nama Pemilih <small>(enter from sample Voter ID)</small></label>
-					</td>
-					<td>
-						<input type="text" name="voter_id" placeholder="VOID001" required>
-					</td>	
-				</tr>
-			    <tr>
-			    	<td></td>
-			    	<td>
-			    		<input type="submit" value="Vote">
-			    	</td>
-			    </tr>
-				</table>
-			</form>
-	<!-- </center> -->
-	</div>
-		<div style="float:right; width: 30% ; height: 900px; overflow-y:auto ">
-			<form action="/add-dpt" method="post">
-				<table style="width:40%; float: right;">
-					<tr>
-						<td colspan="2">Form Tambah Data Pemilih</td>
-						
-					</tr>
-					<tr>
-						<td>Nama Pemilih</td>
-						<td><input type="text" name="dpt_name" id="dpt_name"></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit" value="Add"></td>
-					</tr>
-				</table>
-			</form>
-			<table style="width:40%; float: right;">
-				<tr>
-			  	<th>Sample Pemilih Tetap</th>
-			  	</tr>
-					{% for voter_id in voter_ids %}
-					<tr>
-						<td>
-				  			{{voter_id}}
-				  		</td>
-					</tr>
-				  	{% endfor %}
-			</table>
-		</div>
-	</div>
-	<br>
-	<hr>
-	<center>
-		<a href="{{node_address}}/mine" target="_blank"><button>Request to mine</button></a>
-		<a href="/"><button>Resync</button></a>
-		<a href="{{node_address}}/chain" target="_blank"><button>View Chain</button></a>
-	</center>
-	<hr>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/bootstrap/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/select2/select2.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+  <title>E-Voting Capres 2024</title>
+</head>
+<body>
+    <navbar class="main-nav">
+        <div class="container">
+            <img src="{{ url_for('static', filename='img/svg/logo.svg') }}" width="120px"/>
+        </div>
+    </navbar>
+    <div class="container mb-5" style="margin-top: 58px;">
+        <form action="/add-dpt" method="post">
 
-	    
+        <div class="nomination">
+            <div class="row g-2">
+                <div class="col-12">
+                    <div class="title">
+                        Pilih Calon Presiden
+                    </div>
+                </div>
+                
+                {% for political_partie in political_parties %}
+                
+                <div class="col-md-6 col-lg-3">
+                   
+                    <div id="capres{{loop.index}}" class="item">
+                    
+                    <div class="number">{{loop.index}}</div>
+                        <p class="name">
+                            {{political_partie}}
+                           
+                        </p>
+                        <input type="radio" class="name" style="visibility: hidden;"   name="party" id="party[{{loop.index}}]" value="{{political_partie}}" id="{{loop.index}}">
+                    </div>
+                  
+                </div>
+                {% endfor %}
 
-	<div style="margin: 20px;">
+                {# <div class="col-md-6 col-lg-3">
+                    <div class="item">
+                        <div class="number">
+                            2
+                        </div>
+                        <p class="name">
+                            Anies Baswedan
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="item">
+                        <div class="number">
+                            3
+                        </div>
+                        <p class="name">
+                            Prabowo Subianto
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="item">
+                        <div class="number">
+                            4
+                        </div>
+                        <p class="name">
+                            Ridwan Kamil
+                        </p>
+                    </div>
+                </div> #}
+            </div>
+            <form action="/add-dpt" method="post">
 
-	 <div class="col-md-6" >
-	    	<h2>Result Detail</h2>
+            <div class="selection-container">
+                <div class="title-2">
+                    <i class="fa-solid fa-user-group"></i>
+                    Nama Pemilih
+                </div>
+                <div class="select-container">
+                    <select name="voter_id" class="select2" name="state">
+                        {% for voter_id in voter_ids %}
+                        <option value="{{voter_id}}">{{voter_id}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="button-vote-container">
+                    <button type="submit" class="btn-vote">
+                        PILIH SEKARANG
+                    </button>
+                </div>
+            </div>
+            </form>
+            <div class="selection-container">
+                <div class="title-2">
+                    <i class="fa-solid fa-cog"></i>  &nbsp; Proses Perhitungan Penyimpanan Hasil Voting dengan Tecknologi Blockchain
+                </div>
+                <div class="select-container">
+                    <center>
+                        <a class="btn btn-vote" href="{{node_address}}/mine" >REQUEST TO MINE</a>
+                        <a class="btn btn-vote" href="{{node_address}}/">RESYNC</a>
+                        <a class="btn btn-vote" href="{{node_address}}/chain">VIEW CHAIN</a>
+                    </center>
+                </div>
+            </div>
+            <div>
+                <hr>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <center class="alert alert-success">
+            
+                {% for category, message in messages %}
+                    {% if category=='error'%}
+                    <li style="color: red">{{ message }} </li>
+                    {% else %}
+                    <li style="color: blue">{{ message }} </li>
+                    {% endif %}
+                
+                {% endfor %}
+                </center>
+            
+                {% endif %}
+                {% endwith %}
+                {% for p in political_parties %}
+               
+                 
+                 <input id="hasil{{loop.index}}" type="hidden" name="hasil[]" value="{{ vote_gain.count(p) }}"> 
+                
+               {% endfor %}
+            </div>
+        </div>
+        </form>
+        <div class="information">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="left">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div id="details" class="details">
+                                    <div class="title">
+                                       Detail Pemilihan
+                                    </div>
+                                    <div class="list-voted">
+                                        {% for post in posts %}
 
-			<table>
-			  <tr>
-			  	<th>Daftar Pemilih Tetap</th>
-			    <th>Calon Presiden</th>
-			    <th>Voted Time</th>
-			  </tr>
-			  {% for post in posts %}
-			  <tr>
-			  	<td>{{post.voter_id}}</td>
-			    <td>{{post.party}}</td>
-			    <td>{{readable_time(post.timestamp)}}</td>
-			  </tr>
-			 {% endfor %}
-			</table>
-	    </div>
+                                        <div class="item">
+                                            <div class="img-container">
+                                                <img src="" class="user-img"/>
+                                            </div>
+                                            <div class="text">
+                                                <p class="name">{{post.voter_id}}</p>
+                                                <p class="datetime">
+                                                    <i class="fa-regular fa-clock"></i>
+                                                    {{readable_time(post.timestamp)}}
+                                                </p>
+                                            </div>
+                                            <div class="voting-container">
+                                                <p class="fw-bold me-2">Pilihan :</p>
+                                                <div class="voting">
+                                                    <i class="fa-solid fa-user-tie me-1"></i>
+                                                    {{post.party}}
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        {% endfor %}
+                                 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id="result" class="result">
+                                    <div class="title">
+                                        Laporan Hasil 
+                                    </div>
+                                    <div class="body">
+                                        <canvas id="voting-chart" style="width:100%;max-width:700px;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="right">
+                        <div class="title mb-3">
+                            Daftar Pemilih
+                            <div id="totalpemilih" class="count">
+                                {{ voter_ids|length }}
+                            </div>
+                        </div>
+                        <div class="body">
+                            <form action="/add-dpt" method="post">
 
-	<div class="col-md-4" style="margin-left: 10px;">
-	    	<h2>Result Summary</h2>
+                            <div class="input-group mb-3">
+                                <input id="input-voter-name" name="dpt_name" type="text" class="form-control" placeholder="Nama Pemilih"/>
+                                <button type="submit" class="btn btn-danger fw-bold" > + Tambah</button>
+                            </div>
+                            </form>
+                            <div class="list-voters">
+                                {% for voter_id in voter_ids %}
 
-			<table> 
-			  <tr>
-			    <th width="25%">Nama Calon Presiden</th>
-			    <th width="25%">Total vote</th>
-			  </tr>
-			  {% for p in political_parties %}
-			  <tr>
-			    <td>{{p}}</td>
-			    <td>{{vote_gain.count(p)}}</td>
-			  </tr>
-			 {% endfor %}
-			</table>
-	    </div>
-	    
-
-	   
-	
-
-	<style>
-	table {
-	  font-family: arial, sans-serif;
-	  border-collapse: collapse;
-	  width: 100%;
-	}
-
-	td, th {
-	  border: 1px solid #dddddd;
-	  text-align: left;
-	  padding: 8px;
-	}
-
-	
-	.col-md-4{
-	    float: left;
-	    width: 33.33333333%;
-	}
-	.col-md-2{
-	    float: left;
-	    width: 16.33333333%;
-	}
-	.col-md-6{
-	    float: left;
-	    width: 60.33333333%;
-	}
-	</style>
+                                <div class="item">
+                                    {{voter_id}}
+                                </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-{% endblock %}
+</body>
+<script src="{{ url_for('static',filename='plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static',filename='plugins/select2/select2.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+
+        $('.nomination .item').click(function(){
+            if($(this).hasClass('active')){
+                $(this).removeClass('active')
+                $('.nomination .item input[name="party"]').attr('checked', false)
+            }else{
+                $('.nomination .item').removeClass('active')
+                $('.nomination .item input[name="party"]').attr('checked', false)
+                $(this).addClass('active')
+                $(this).find('input[name="party"]').attr('checked', true)
+            }
+        });
+
+        var countVoted = $('.list-voted .item').length;
+        for(var i=1; i<=countVoted; i++){
+            var random = Math.floor(Math.random() * 15);
+            var img = '{{ url_for("static",filename="img/user/user-")}}'+random+'.svg';
+            $('.list-voted .item:nth-child('+i+') img').attr('src', img)
+        }
+
+        voteChart();
+    });
+
+    function addVoter(el){
+        var name = $('#input-voter-name').val();
+        var html = '<div class="item">'+name+'</div>';
+
+        $('.list-voters').append(html);
+    }
+
+    function voteChart(){
+        var xValues = {{ political_parties|tojson }};
+        var hasil = $("input[name='hasil[]']")
+        .map(function(){return $(this).val();}).get();
+        console.log(hasil);
+        var yValues = hasil;
+        var barColors = ["#962727", "#FE6720","#26D0AA","#313978"];
+
+        new Chart("voting-chart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            title: {
+            display: true,
+            text: "Pemilihan Capres 2024"
+            }
+        }
+        });
+    }
+</script>
+</html>
