@@ -1,13 +1,27 @@
-FROM python:3.8-slim
-RUN pip install --no-cache-dir matplotlib pandas
+FROM python:3.9-alpine
 
-RUN mkdir /code
-COPY . /code
-COPY requirements.txt /code
-WORKDIR /code
+# Set environment variables
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_PORT=3333
+ENV SERVICE_PORT=4444
 
+# Install system dependencies
+RUN apk add --no-cache gcc musl-dev linux-headers
 
-RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
-EXPOSE 3333
-EXPOSE 4444
-CMD ["flask", "run", "--host", "0.0.0.0"]
+# Install Python dependencies
+RUN pip install --upgrade pip
+RUN pip install service Flask==1.1 gunicorn==20.1.0 Jinja2==2.11.3 MarkupSafe==2.1.2
+
+# Create virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copy application files to container
+COPY ./app /app
+
+# Expose ports
+EXPOSE $FLASK_RUN_PORT
+EXPOSE $SERVICE_PORT
+
+# Run the application
+CMD ["sh", "-c", "gunicorn --workers=2 --bind=0.0.0.0:$FLASK_RUN_PORT --log-level=debug app:app --timeout 300 & gunicorn --workers=2 --bind=0.0.0.0:$SERVICE_PORT --log-level=debug service:app --timeout 300"]

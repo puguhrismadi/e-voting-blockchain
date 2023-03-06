@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
   <title>E-Voting Capres 2024</title>
 </head>
+<style>
+    li {
+        text-decoration: none;
+    }
+</style>
 <body>
     <navbar class="main-nav">
         <div class="container">
@@ -17,7 +22,7 @@
         </div>
     </navbar>
     <div class="container mb-5" style="margin-top: 58px;">
-        <form action="/add-dpt" method="post">
+        <form action="/submit" method="post">
 
         <div class="nomination">
             <div class="row g-2">
@@ -112,7 +117,7 @@
                 <hr>
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
-                <center class="alert alert-success">
+                <center class="alert alert-danger">
             
                 {% for category, message in messages %}
                     {% if category=='error'%}
@@ -162,8 +167,8 @@
                                             <div class="voting-container">
                                                 <p class="fw-bold me-2">Pilihan :</p>
                                                 <div class="voting">
-                                                    <i class="fa-solid fa-user-tie me-1"></i>
-                                                    {{post.party}}
+                                                    <i  class="fa-solid fa-user-tie me-1"></i>
+                                                    <span id="hasil{{loop.index}}">{{post.party}}</span>
                                                 </div>
                                             </div>
                                         </div> 
@@ -258,6 +263,7 @@
         var hasil = $("input[name='hasil[]']")
         .map(function(){return $(this).val();}).get();
         console.log(hasil);
+        
         var yValues = hasil;
         var barColors = ["#962727", "#FE6720","#26D0AA","#313978"];
 
@@ -267,7 +273,7 @@
             labels: xValues,
             datasets: [{
             backgroundColor: barColors,
-            data: yValues
+            data:  hasil
             }]
         },
         options: {
