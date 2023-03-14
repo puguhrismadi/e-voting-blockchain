@@ -2,17 +2,19 @@ import datetime
 import json
 
 import requests
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request,jsonify
 from flask import flash
 from app import app
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well. change presiden
 CONNECTED_SERVICE_ADDRESS = "http://192.168.7.84:4444"
-POLITICAL_PARTIES = ["Anies Baswedan","Ridwan Kamil","Ganjar Pranowo","Prabowo Subianto"]
-VOTER_IDS=['Fadri','Alfi','Yudo','Haryo','Rizal','Tanzel','Gerdi','Farid','Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya']
+POLITICAL_PARTIES = ["Atta Halilintar","Rafi Ahmad","Baim Wong","Deddy Corbuzier"]
+VOTERS=['Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya']
+VOTER_IDS = sorted(VOTERS, reverse=True)
+#VOTER_IDS=[{'name': 'Fay', 'date_time': '2022-10-01 12:30:00'},{'name': 'Puguh', 'date_time': '2022-10-01 12:31:00'},{'name': 'Raxel', 'date_time': '2022-10-01 12:33:00'}];
 vote_check=[]
-
+#VOTER_IDS=sorted(VOTER_IDS, key=lambda x: x['date_time'],reverse=True)
 posts = []
 
 
@@ -68,6 +70,10 @@ def submit_textarea():
     """
     Endpoint to create a new transaction via our application.
     """
+    if 'party' not in request.form:
+        flash('Nama Content Creator Belum Di Pilih', 'error')
+        return redirect('/')
+    
     party = request.form["party"]
     voter_id = request.form["voter_id"]
 
@@ -76,13 +82,14 @@ def submit_textarea():
         'party': party,
     }
     if voter_id not in VOTER_IDS:
-        flash('Nama Pemilih invalid, please select Nama Pemilih from sample!', 'error')
-        return redirect('/')
+            flash('Nama Pemilih invalid, silahkan pilih Nama Pemilih !', 'error')
+            return redirect('/')
     if voter_id in vote_check:
-        flash('Nama Pemilih ('+voter_id+') already vote, Vote can be done by unique vote ID only once!', 'error')
-        return redirect('/')
+            flash('Nama Pemilih ('+voter_id+') Sudah Vote, Voting hanya dapat di lakukan 1 kali oleh satu pemilih!', 'error')
+            return redirect('/')
     else:
-        vote_check.append(voter_id)
+            vote_check.append(voter_id)
+    
     # Submit a transaction
     new_tx_address = "{}/new_transaction".format(CONNECTED_SERVICE_ADDRESS)
 
@@ -100,7 +107,11 @@ def timestamp_to_string(epoch_time):
 @app.route('/add-dpt',methods=['POST'])
 def add_dpt():
     index = len(VOTER_IDS)
+
     dpt_name = request.form['dpt_name']
     VOTER_IDS.insert(index,dpt_name)
-    return "Succed to add new Voter"
+    # VOTER_IDS=sorted(VOTER_IDS, key=lambda x: x['date_time'],reverse=True)
+    flash('Data Pemilih  '+dpt_name+' Sukses di tambahkan', 'success')
+    return redirect('/')
+    
 

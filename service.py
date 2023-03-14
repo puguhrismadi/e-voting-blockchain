@@ -2,8 +2,9 @@ from hashlib import sha256
 import json
 import time
 
-from flask import Flask, request
+from flask import Flask, flash, request,jsonify, redirect,render_template
 import requests
+from app import app
 
 
 class Block:
@@ -166,15 +167,19 @@ def new_transaction():
 # endpoint to return the node's copy of the chain.
 # Our application will be using this endpoint to query
 # all the posts to display.
+@app.route('/', methods=['GET'])
+def refreh_index():
+    return redirect(request.referrer or '/')
 @app.route('/chain', methods=['GET'])
 def get_chain():
     chain_data = []
     for block in blockchain.chain:
         chain_data.append(block.__dict__)
-    return json.dumps({"length": len(chain_data),
+    mydata=({"length": len(chain_data),
                        "chain": chain_data,
                        "peers": list(peers)})
-
+    
+    return render_template('base.html',block=mydata)
 
 # endpoint to request the node to mine the unconfirmed
 # transactions (if any). We'll be using it to initiate
@@ -191,7 +196,11 @@ def mine_unconfirmed_transactions():
         if chain_length == len(blockchain.chain):
             # announce the recently mined block to the network
             announce_new_block(blockchain.last_block)
-        return "Block #{} is mined.".format(blockchain.last_block.index)
+        pesan = "Block #{} is mined.".format(blockchain.last_block.index)
+        flash(pesan, 'success')
+        print(pesan)
+        return redirect(request.referrer or '/')
+        #return jsonify({"message":"Block #{} is mined.".format(blockchain.last_block.index)})
 
 
 # endpoint to add new peers to the network.
@@ -276,7 +285,10 @@ def verify_and_add_block():
     if not added:
         return "The block was discarded by the node", 400
 
-    return "Block added to the chain", 201
+    
+    #return "Block added to the chain", 201
+    flash('Block Telah Di tambahkan ', 'success')
+    return redirect('/',202)
 
 
 # endpoint to query unconfirmed transactions
@@ -324,4 +336,5 @@ def announce_new_block(block):
                       headers=headers)
 
 # Uncomment this line if you want to specify the port number in the code
+app.secret_key = '6dbf23122cb5046cc5c0c1b245c75f8e43c59ca8ffeac292715e5078e631d0c9'
 app.run(host='0.0.0.0',port=4444)

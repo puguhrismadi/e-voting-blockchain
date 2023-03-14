@@ -1,30 +1,32 @@
+<!DOCTYPE html>
 <html>
-  <head>
-     <meta charset="UTF-8">
-    <title>{{ title }}</title>
-  </head>
-  <body>
-   
-    <center><a href="/"><h3>{{ title }}</h3></a>
-    <h5>Blockchain Tecnology simulation with Python</h5>
-    </center>
-    <hr>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <center>
-   
-    {% for category, message in messages %}
-        {% if category=='error'%}
-          <li style="color: red">{{ message }} </li>
-        {% else %}
-          <li style="color: blue">{{ message }} </li>
-        {% endif %}
-      
-    {% endfor %}
-    </center>
-   
-    {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/bootstrap/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/select2/select2.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+  <title>E-Voting Best Content Creator 2024</title>
+</head>
+<style>
+    li {
+        text-decoration: none;
+    }
+</style>
+<body>
+    <navbar class="main-nav">
+        <div class="container">
+            <img src="{{ url_for('static', filename='img/svg/logo.svg') }}" width="120px"/>
+        </div>
+    </navbar>
+    <div class="container mb-5" style="margin-top: 58px;">
+       <pre>{{ block | tojson | safe}}</pre>
+    </div>
+</body>
+<script src="{{ url_for('static',filename='plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static',filename='plugins/select2/select2.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
 </html>

@@ -212,6 +212,15 @@ body{
     padding: 0 20px;
     font-weight: bold;
 }
+.btn-vote:hover{
+    background: rgb(240, 240, 215);
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    height: 40px;
+    padding: 0 20px;
+    font-weight: bold;
+}
 
 .list-voters{
     max-height: 494px;

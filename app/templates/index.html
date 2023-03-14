@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ url_for('static',filename='plugins/bootstrap/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{ url_for('static',filename='plugins/select2/select2.min.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-  <title>E-Voting Capres 2024</title>
+  <title>E-Voting Best Content Creator 2024</title>
 </head>
 <style>
     li {
@@ -28,7 +28,7 @@
             <div class="row g-2">
                 <div class="col-12">
                     <div class="title">
-                        Pilih Calon Presiden
+                        Pilih Content Creator Favorit Kamu
                     </div>
                 </div>
                 
@@ -49,36 +49,7 @@
                 </div>
                 {% endfor %}
 
-                {# <div class="col-md-6 col-lg-3">
-                    <div class="item">
-                        <div class="number">
-                            2
-                        </div>
-                        <p class="name">
-                            Anies Baswedan
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="item">
-                        <div class="number">
-                            3
-                        </div>
-                        <p class="name">
-                            Prabowo Subianto
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="item">
-                        <div class="number">
-                            4
-                        </div>
-                        <p class="name">
-                            Ridwan Kamil
-                        </p>
-                    </div>
-                </div> #}
+              
             </div>
             <form action="/add-dpt" method="post">
 
@@ -88,9 +59,10 @@
                     Nama Pemilih
                 </div>
                 <div class="select-container">
-                    <select name="voter_id" class="select2" name="state">
+                    <select id="voter-opsi" name="voter_id" class="select2" name="state">
                         {% for voter_id in voter_ids %}
-                        <option value="{{voter_id}}">{{voter_id}}</option>
+                       
+                        <option class="pemilih" id="voter{{loop.index}}" value="{{voter_id}}">{{voter_id}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -121,9 +93,9 @@
             
                 {% for category, message in messages %}
                     {% if category=='error'%}
-                    <li style="color: red">{{ message }} </li>
+                    <span style="color: red">{{ message }} </span>
                     {% else %}
-                    <li style="color: blue">{{ message }} </li>
+                    <span style="color: blue">{{ message }} </span>
                     {% endif %}
                 
                 {% endfor %}
@@ -207,9 +179,9 @@
                             </div>
                             </form>
                             <div class="list-voters">
-                                {% for voter_id in voter_ids %}
-
-                                <div class="item">
+                                {% for voter_id in voter_ids | sort(reverse=false)  %}
+                               
+                                <div  id="list-{{loop.index}}" class="item">
                                     {{voter_id}}
                                 </div>
                                 {% endfor %}
@@ -226,6 +198,21 @@
 <script src="{{ url_for('static',filename='plugins/select2/select2.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
+    $(document).ready(function() {
+        var items = $('.pemilih');
+
+        // Sort the divs in descending order based on the voter_id value
+        items.sort(function(a, b) {
+            var aVal = parseInt($(a).text());
+            var bVal = parseInt($(b).text());
+            return bVal - aVal;
+        });
+
+        // Append the sorted divs to their parent container in the new order
+        var parent = items.eq(0).parent();
+        items.detach().appendTo(parent);
+
+      });
     $(document).ready(function() {
         $('.select2').select2();
 
@@ -266,6 +253,7 @@
         
         var yValues = hasil;
         var barColors = ["#962727", "#FE6720","#26D0AA","#313978"];
+       
 
         new Chart("voting-chart", {
         type: "bar",
@@ -273,6 +261,7 @@
             labels: xValues,
             datasets: [{
             backgroundColor: barColors,
+            
             data:  hasil
             }]
         },
@@ -280,7 +269,7 @@
             legend: {display: false},
             title: {
             display: true,
-            text: "Pemilihan Capres 2024"
+            text: "Pemilihan Favourite Content Creator 2024"
             }
         }
         });
