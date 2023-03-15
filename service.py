@@ -190,7 +190,9 @@ def get_chain():
 def mine_unconfirmed_transactions():
     result = blockchain.mine()
     if not result:
-        return "No transactions to mine"
+        pesan="Tidak ada transaksi untuk di mining"
+        flash(pesan, 'success')
+        return redirect(request.referrer or '/')
     else:
         # Making sure we have the longest chain before announcing to the network
         chain_length = len(blockchain.chain)
@@ -198,7 +200,7 @@ def mine_unconfirmed_transactions():
         if chain_length == len(blockchain.chain):
             # announce the recently mined block to the network
             announce_new_block(blockchain.last_block)
-        pesan = "Block #{} is mined.".format(blockchain.last_block.index)
+        pesan = "Block #{} telah di Mining.".format(blockchain.last_block.index)
         flash(pesan, 'success')
         print(pesan)
         return redirect(request.referrer or '/')
@@ -245,7 +247,7 @@ def register_with_existing_node():
         chain_dump = response.json()['chain']
         blockchain = create_chain_from_dump(chain_dump)
         peers.update(response.json()['peers'])
-        return "Registration successful", 200
+        return "Sukse Mendaftarkan Ke Block", 200
     else:
         # if something goes wrong, pass it on to the API response
         return response.content, response.status_code
@@ -265,7 +267,7 @@ def create_chain_from_dump(chain_dump):
         proof = block_data['hash']
         added = generated_blockchain.add_block(block, proof)
         if not added:
-            raise Exception("The chain dump is tampered!!")
+            raise Exception("Block Chain Telah di manipulasi!!")
     return generated_blockchain
 
 
@@ -285,7 +287,7 @@ def verify_and_add_block():
     added = blockchain.add_block(block, proof)
 
     if not added:
-        return "The block was discarded by the node", 400
+        return "Blok Telah di tolak oleh Node", 400
 
     
     #return "Block added to the chain", 201
