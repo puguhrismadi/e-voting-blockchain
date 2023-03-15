@@ -266,39 +266,61 @@
         $('.list-voters').append(html);
     }
 
-    function voteChart(){
-        
-        var xValues = {{ political_parties|tojson }};
-        var hasil = $("input[name='hasil[]']")
-        .map(function(){return $(this).val();}).get();
-        console.log(hasil);
-        
-        var yValues = hasil;
+    function voteChart(){   
         var barColors = ["#962727", "#FE6720","#26D0AA","#313978"];
-       
+            var ctx = document.getElementById('voting-chart').getContext('2d');
 
-        new Chart("voting-chart", {
-        type: "bar",
-        yAxis: {
-            labels: {
-              format: '{value:.0f}' // Format label nilai menjadi bilangan bulat
-            }
-          },
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColors,
-            data:  hasil
-            }]
-        },
-        options: {
-            legend: {display: false},
-            title: {
-            display: true,
-            text: "Pemilihan Favourite Content Creator 2024"
-            }
-        }
-        });
+            //Data dari Flask
+            var labelku = {{ political_parties|tojson }};
+            var hasil = $("input[name='hasil[]']")
+        .map(function(){return $(this).val();}).get();
+            var chartData = {
+              labels: labelku,
+              datasets: [{
+                label: 'Voter',
+                data: hasil,
+                backgroundColor: barColors
+              }]
+            };
+      
+            var chartOptions = {
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero:true,
+                    callback: function(value, index, values) {
+                      return Number(value).toFixed(0);
+                    }
+                  },
+                  labels: {
+                    formatter: function() {
+                      // memeriksa apakah nilai label sudah ditambahkan ke daftar
+                      if (!this.axis.uniqueValues) {
+                        this.axis.uniqueValues = {};
+                      }
+                      if (!this.axis.uniqueValues[this.value]) {
+                        this.axis.uniqueValues[this.value] = true;
+                        return this.value;
+                      }
+                      return null; // null agar label tidak ditampilkan
+                    }
+                  }
+                }]
+              },
+              title: {
+                display: true,
+                text: 'Pemilihan Favourite Content Creator 2024'
+              },
+              legend: {
+                display: false
+              }
+            };
+      
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: chartData,
+              options: chartOptions
+            });
     }
     
 </script>
