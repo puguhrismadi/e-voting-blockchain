@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/bootstrap/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='plugins/select2/select2.min.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+  <title>E-Voting Best Content Creator 2024</title>
+</head>
+<style>
+    li {
+        text-decoration: none;
+    }
+</style>
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+      <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<body>
+    <navbar class="main-nav">
+        <div class="container">
+            <img src="{{ url_for('static', filename='img/svg/logo.svg') }}" width="120px"/>
+        </div>
+    </navbar>
+    <div class="selection-container">
+        <div class="title-2">
+            <i class="fa-solid fa-cog"></i>  &nbsp; Berikut ini adalah data Block Data pada Teknologi Blockchain Aplikasi e-voting
+        </div>
+        <div class="select-container">
+            <center>
+                <a class="btn btn-vote" href="/" >HOME</a>
+               
+            </center>
+        </div>
+    </div>
+    <div class="container mb-5" style="margin-top: 58px;">
+   <div class="nomination">
+    <pre class="json"><code>{{ json_data|safe }}</code></pre>
+   </div>
+    </div>
+</body>
+<script src="{{ url_for('static',filename='plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static',filename='plugins/select2/select2.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+</html>

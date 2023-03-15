@@ -8,7 +8,11 @@
   <link rel="stylesheet" href="{{ url_for('static',filename='plugins/bootstrap/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{ url_for('static',filename='plugins/select2/select2.min.css')}}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')}}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico')}}" type="image/x-icon">
   <title>E-Voting Best Content Creator 2024</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
 </head>
 <style>
     li {
@@ -67,7 +71,7 @@
                     </select>
                 </div>
                 <div class="button-vote-container">
-                    <button type="submit" class="btn-vote">
+                    <button type="submit" class="third btn-vote">
                         PILIH SEKARANG
                     </button>
                 </div>
@@ -81,7 +85,7 @@
                     <center>
                         <a class="btn btn-vote" href="{{node_address}}/mine" >REQUEST TO MINE</a>
                         <a class="btn btn-vote" href="{{node_address}}/">RESYNC</a>
-                        <a class="btn btn-vote" href="{{node_address}}/chain">VIEW CHAIN</a>
+                        <a class="btn btn-vote" href="/view-chain">VIEW CHAIN</a>
                     </center>
                 </div>
             </div>
@@ -89,17 +93,24 @@
                 <hr>
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
-                <center class="alert alert-danger">
+              
             
                 {% for category, message in messages %}
                     {% if category=='error'%}
-                    <span style="color: red">{{ message }} </span>
+                    <script>
+                        swal({
+                            title: "{{ message }}",
+                            icon: "danger",
+                        });
+                    </script>
                     {% else %}
-                    <span style="color: blue">{{ message }} </span>
+                    <script>
+                        swal("Sukses","{{ message }}", "success");
+                    </script>
                     {% endif %}
                 
                 {% endfor %}
-                </center>
+             
             
                 {% endif %}
                 {% endwith %}
@@ -198,6 +209,14 @@
 <script src="{{ url_for('static',filename='plugins/select2/select2.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
+    document.querySelector(".third").addEventListener('click', function(){
+
+        swal("Our First Alert", "With some body text and success icon!", "success");
+      
+      });
+      
+</script>
+<script>
     $(document).ready(function() {
         var items = $('.pemilih');
 
@@ -246,6 +265,7 @@
     }
 
     function voteChart(){
+        
         var xValues = {{ political_parties|tojson }};
         var hasil = $("input[name='hasil[]']")
         .map(function(){return $(this).val();}).get();
@@ -274,5 +294,6 @@
         }
         });
     }
+    
 </script>
 </html>

@@ -175,11 +175,13 @@ def get_chain():
     chain_data = []
     for block in blockchain.chain:
         chain_data.append(block.__dict__)
-    mydata=({"length": len(chain_data),
+    mydata=json.dumps({"length": len(chain_data),
                        "chain": chain_data,
-                       "peers": list(peers)})
+                       "peers": list(peers)}, indent=4)
+    code = jsonify(json.loads(mydata))
     
-    return render_template('base.html',block=mydata)
+    return code
+   # return response
 
 # endpoint to request the node to mine the unconfirmed
 # transactions (if any). We'll be using it to initiate

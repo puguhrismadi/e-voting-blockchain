@@ -2,13 +2,17 @@ import datetime
 import json
 
 import requests
-from flask import render_template, redirect, request,jsonify
+from flask import render_template, redirect, request,jsonify, Markup
 from flask import flash
+from pygments import highlight
+from pygments.lexers import JsonLexer
+from pygments.formatters import HtmlFormatter
+
 from app import app
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well. change presiden
-CONNECTED_SERVICE_ADDRESS = "http://192.168.7.84:4444"
+CONNECTED_SERVICE_ADDRESS = "http://192.168.7.84:4444/"
 POLITICAL_PARTIES = ["Atta Halilintar","Rafi Ahmad","Baim Wong","Deddy Corbuzier"]
 VOTERS=['Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya']
 VOTER_IDS = sorted(VOTERS, reverse=True)
@@ -59,6 +63,17 @@ def index():
                            readable_time=timestamp_to_string,
                            political_parties=POLITICAL_PARTIES,
                            voter_ids=VOTER_IDS)
+
+
+@app.route('/view-chain')
+def my_chain():
+    response = requests.get("http://192.168.7.84:4444/chain")
+    data =json.dumps(response.json(),indent=4)
+    #json_str = json.loads(data)
+    highlighted_json = highlight(data, JsonLexer(), HtmlFormatter())
+    return render_template('json.html',json_data=highlighted_json)
+   
+
 
 @app.route('/test',methods=['GET'])
 def tampil():
