@@ -10,9 +10,11 @@ from pygments.formatters import HtmlFormatter
 
 from app import app
 
+
 # The node with which our application interacts, there can be multiple
 # such nodes as well. change presiden
-CONNECTED_SERVICE_ADDRESS = "http://192.168.7.84:4444/"
+SERVER_IP="http://192.168.7.84"
+CONNECTED_SERVICE_ADDRESS = SERVER_IP+":4444/"
 POLITICAL_PARTIES = ["Atta Halilintar","Rafi Ahmad","Baim Wong","Deddy Corbuzier"]
 VOTERS=['Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya','Andi', 'Budi', 'Citra', 'Dewi', 'Eka', 'Fajar', 'Gita', 'Hani', 'Indra', 'Joko']
 VOTER_IDS = sorted(VOTERS, reverse=True)
@@ -50,7 +52,7 @@ def index():
     fetch_posts()
 
     vote_gain = []
-
+    
     for post in posts:
         vote_gain.append(post["party"])
 
@@ -67,7 +69,7 @@ def index():
 
 @app.route('/view-chain')
 def my_chain():
-    response = requests.get("http://192.168.7.84:4444/chain")
+    response = requests.get(SERVER_IP+":4444/chain")
     data =json.dumps(response.json(),indent=4)
     #json_str = json.loads(data)
     highlighted_json = highlight(data, JsonLexer(), HtmlFormatter())
