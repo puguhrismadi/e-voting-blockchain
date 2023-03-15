@@ -79,7 +79,7 @@
             </form>
             <div class="selection-container">
                 <div class="title-2">
-                    <i class="fa-solid fa-cog"></i>  &nbsp; Proses Perhitungan Penyimpanan Hasil Voting dengan Tecknologi Blockchain
+                    <i class="fa-solid fa-cog"></i>  &nbsp; Proses Perhitungan Penyimpanan Hasil Voting dengan Teknologi Blockchain
                 </div>
                 <div class="select-container">
                     <center>
@@ -191,10 +191,10 @@
                             </div>
                         </div>
                         <div class="body">
-                            <form action="/add-dpt" method="post">
+                            <form id="my-form" action="/add-dpt" method="post">
 
                             <div class="input-group mb-3">
-                                <input id="input-voter-name" name="dpt_name" type="text" class="form-control" placeholder="Nama Pemilih"/>
+                                <input required="required" id="input-voter-name" name="dpt_name" type="text" class="form-control" placeholder="Nama Pemilih"/>
                                 <button type="submit" class="btn btn-danger fw-bold" > + Tambah</button>
                             </div>
                             </form>
@@ -217,14 +217,7 @@
 <script src="{{ url_for('static',filename='plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{ url_for('static',filename='plugins/select2/select2.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script>
-    document.querySelector(".third").addEventListener('click', function(){
 
-        swal("Our First Alert", "With some body text and success icon!", "success");
-      
-      });
-      
-</script>
 <script>
     $(document).ready(function() {
         var items = $('.pemilih');
@@ -286,11 +279,15 @@
 
         new Chart("voting-chart", {
         type: "bar",
+        yAxis: {
+            labels: {
+              format: '{value:.0f}' // Format label nilai menjadi bilangan bulat
+            }
+          },
         data: {
             labels: xValues,
             datasets: [{
             backgroundColor: barColors,
-            
             data:  hasil
             }]
         },
