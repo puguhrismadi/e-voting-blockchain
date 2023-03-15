@@ -11,8 +11,8 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')}}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico')}}" type="image/x-icon">
   <title>E-Voting Best Content Creator 2024</title>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 </head>
 <style>
     li {
@@ -98,14 +98,23 @@
                 {% for category, message in messages %}
                     {% if category=='error'%}
                     <script>
-                        swal({
-                            title: "{{ message }}",
-                            icon: "danger",
+                        Swal.fire({
+                            title:'Pesan',
+                            text: '{{ message }}',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 3000
                         });
                     </script>
                     {% else %}
                     <script>
-                        swal("Sukses","{{ message }}", "success");
+                        Swal.fire({
+                            title:'Pesan',
+                            text: '{{ message }}',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
                     </script>
                     {% endif %}
                 
