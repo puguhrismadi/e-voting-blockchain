@@ -14,7 +14,7 @@ from app import app
 # such nodes as well. change presiden
 CONNECTED_SERVICE_ADDRESS = "http://192.168.7.84:4444/"
 POLITICAL_PARTIES = ["Atta Halilintar","Rafi Ahmad","Baim Wong","Deddy Corbuzier"]
-VOTERS=['Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya']
+VOTERS=['Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya','Andi', 'Budi', 'Citra', 'Dewi', 'Eka', 'Fajar', 'Gita', 'Hani', 'Indra', 'Joko']
 VOTER_IDS = sorted(VOTERS, reverse=True)
 #VOTER_IDS=[{'name': 'Fay', 'date_time': '2022-10-01 12:30:00'},{'name': 'Puguh', 'date_time': '2022-10-01 12:31:00'},{'name': 'Raxel', 'date_time': '2022-10-01 12:33:00'}];
 vote_check=[]
