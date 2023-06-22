@@ -1,5 +1,5 @@
 # Base image
-FROM python:3.9-slim-buster
+FROM python:3.12.0b3-slim-bullseye
 
 # Set working directory
 RUN mkdir /code
