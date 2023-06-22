@@ -17,11 +17,5 @@ services:
   app:
     build: .
     ports:
-      - "3333:3333"
+      - "2222:2222"
     command: python app.py
-
-  service:
-    build: .
-    ports:
-      - "4444:4444"
-    command: python service.py
