@@ -13,7 +13,7 @@ from app import app
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well. change presiden
-SERVER_IP="http://192.168.7.84"
+SERVER_IP="http://192.168.7.251"
 CONNECTED_SERVICE_ADDRESS = SERVER_IP+":4444/"
 POLITICAL_PARTIES = ["Atta Halilintar","Rafi Ahmad","Baim Wong","Deddy Corbuzier"]
 VOTERS=['Fay','Kukuh','Puguh','Raxel','Rangga','Lisa','Arya','Andi', 'Budi', 'Citra', 'Dewi', 'Eka', 'Fajar', 'Gita', 'Hani', 'Indra', 'Joko']
