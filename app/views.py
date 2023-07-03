@@ -9,7 +9,7 @@ from pygments.lexers import JsonLexer
 from pygments.formatters import HtmlFormatter
 
 from app import app
-
+import html as html
 
 # The node with which our application interacts, there can be multiple
 # such nodes as well. change presiden
@@ -126,6 +126,7 @@ def add_dpt():
     index = len(VOTER_IDS)
 
     dpt_name = request.form['dpt_name']
+    dpt_name = html.escape(dpt_name, False)
     VOTER_IDS.insert(index,dpt_name)
     # VOTER_IDS=sorted(VOTER_IDS, key=lambda x: x['date_time'],reverse=True)
     flash('Data Pemilih  '+dpt_name+' Sukses di tambahkan', 'success')
